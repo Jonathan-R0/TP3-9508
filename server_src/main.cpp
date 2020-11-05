@@ -1,7 +1,7 @@
 #include <fstream>
 #include <iostream>
 
-#include "../common_src/socket.h"
+#include "serversocket.h"
 
 // DELETE THIS LATER
 #include <arpa/inet.h>
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
     return -1;
   }
 
-  Socket self;
+  ServerSocket self;
   char* port = argv[1];
 
   if (self.bind_(port) == -1 || self.listen_(20) == -1 ||

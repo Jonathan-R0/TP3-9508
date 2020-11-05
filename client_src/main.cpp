@@ -1,7 +1,7 @@
 #include <fstream>
 #include <iostream>
 
-#include "../common_src/socket.h"
+#include "clientsocket.h"
 
 #define BYTES_A_LEER 64
 
@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
     return -1;
   }
 
-  Socket self;
+  ClientSocket self;
   char* port = argv[1];
   char* ip = argv[2];
   std::string file(argv[3]);
