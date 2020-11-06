@@ -11,11 +11,13 @@
 #include <string>
 
 #include "../common_src/socket.h"
+#define GET_ADDR_INFO_ERROR "Error on client's getaddrinfo."
 
-int ClientSocket::connect_(const char* port, const char* ip) {
+void ClientSocket::connect_(const char* port, const char* ip) {
   struct addrinfo* address_list = nullptr;
-  if ((address_list = this->get_addr_info(port, ip)) == nullptr) return -1;
-
+  if ((address_list = this->get_addr_info(port, ip)) == nullptr) 
+    throw std::invalid_argument(GET_ADDR_INFO_ERROR);
+  
   for (struct addrinfo* conex = address_list; conex != nullptr;
        conex = conex->ai_next) {
     int extra_fd =
@@ -31,6 +33,4 @@ int ClientSocket::connect_(const char* port, const char* ip) {
     }
   }
   freeaddrinfo(address_list);
-
-  return (fd == -1);
 }

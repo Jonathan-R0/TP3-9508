@@ -4,6 +4,7 @@
 #include "clientsocket.h"
 
 #define BYTES_A_LEER 64
+#define GENERIC_ERROR "A weird error just occured in the client..."
 
 // DELETE THIS LATER
 #include <arpa/inet.h>
@@ -45,11 +46,16 @@ int main(int argc, char* argv[]) {
   char* ip = argv[2];
   std::string file(argv[3]);
 
-  if (self.connect_(port, ip) == -1) {
-    std::cerr << "Error de conexión." << std::endl;
-    return -1;
-  } else if (sendInfo(self, file) == -1) {
-    return -1;
+  try {
+    self.connect_(port, ip);
+    sendInfo(self, file);
+  } catch (std::invalid_argument& e) {
+    std::cerr << e.what() << std::endl;
+  } catch (...) {
+    std::cerr << GENERIC_ERROR << std::endl;
   }
+  
+
+
   return 0;
 }

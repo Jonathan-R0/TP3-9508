@@ -13,6 +13,7 @@ class Socket {
   ~Socket();
   int send_(std::string& msg);
   int recv_(unsigned int n, char buf[]);
+  void setFd(int newFd);
 };
 
 #endif  // SOCKET_H_

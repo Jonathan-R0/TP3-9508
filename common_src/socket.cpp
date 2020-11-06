@@ -17,6 +17,10 @@ Socket::~Socket() {
   }
 }
 
+void Socket::setFd(int newFd) {
+  if (fd != -1) fd = newFd;
+}
+
 struct addrinfo* Socket::get_addr_info(const char* port, const char* ip) {
   struct addrinfo* address_list;
   struct addrinfo hints;

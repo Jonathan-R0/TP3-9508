@@ -11,30 +11,39 @@
 #include <unistd.h>
 
 #define BYTES_A_LEER 64
+#define GENERIC_ERROR "A weird error just occured in the server..."
 
-static int recvInfo(Socket& self) {
+static void recvInfo(Socket& self) {
   char buf[BYTES_A_LEER];
   if ((self.recv_(sizeof(buf), buf)) == -1) {
     std::cerr << "Died sending info with errno: " << hstrerror(errno)
               << std::endl;
-    return -1;
   }
   std::cout << buf << std::endl;
-  return 0;
 }
 
 int main(int argc, char* argv[]) {
-  if (argc != 2) {
+  if (argc != 3) {
     std::cerr << "Error de argumento." << std::endl;
-    return -1;
+    return 1;
   }
 
   ServerSocket self;
   char* port = argv[1];
+  char* htmlfile = argv[2];
 
-  if (self.bind_(port) == -1 || self.listen_(20) == -1 ||
-      self.accept_() == -1 || recvInfo(self) == -1)
-    return -1;
+  htmlfile++; // Unused variable error. 
+
+  try {
+    self.bind_(port);
+    self.listen_(20);
+    self.accept_();
+    recvInfo(self);
+  } catch (std::invalid_argument& e) {
+    std::cerr << e.what() << std::endl;
+  } catch (...) {
+    std::cerr << GENERIC_ERROR << std::endl;
+  }
 
   return 0;
 }

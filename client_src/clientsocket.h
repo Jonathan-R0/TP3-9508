@@ -7,7 +7,7 @@
 
 class ClientSocket : public Socket {
  public:
-  int connect_(const char* port, const char* ip);
+  void connect_(const char* port, const char* ip);
 };
 
 #endif  // CLIENTSOCKET_H_

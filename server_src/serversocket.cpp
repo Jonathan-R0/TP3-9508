@@ -12,6 +12,8 @@
 
 #include "../common_src/socket.h"
 
+#define ACCEPT_ERROR "Error on server's accept, the socket was not open."
+
 int ServerSocket::accept_() {
   char addressBuf[INET_ADDRSTRLEN];
   struct sockaddr_in address;
@@ -20,6 +22,7 @@ int ServerSocket::accept_() {
   int extra_fd = accept(fd, (struct sockaddr*)&address, &addressLength);
   inet_ntop(AF_INET, &(address.sin_addr), addressBuf, INET_ADDRSTRLEN);
   close(fd);
+  if (extra_fd == -1) throw std::invalid_argument(ACCEPT_ERROR);
   fd = extra_fd;
   return 0;
 }
