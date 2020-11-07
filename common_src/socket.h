@@ -11,8 +11,10 @@ class Socket {
  public:
   Socket() : fd(-1) {}
   ~Socket();
-  int send_(std::string& msg);
-  int recv_(unsigned int n, char buf[]);
+  void stopRecv();
+  void stopSend();
+  int send_(unsigned int len, const char* msg);
+  int recv_(unsigned int len, char* buf);
   void setFd(int newFd);
 };
 

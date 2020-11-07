@@ -1,6 +1,8 @@
 #include <fstream>
 #include <iostream>
 
+#include "../common_src/infomanager.h"
+#include "../common_src/parser.h"
 #include "serversocket.h"
 
 // DELETE THIS LATER
@@ -13,15 +15,6 @@
 #define BYTES_A_LEER 64
 #define GENERIC_ERROR "A weird error just occured in the server..."
 
-static void recvInfo(Socket& self) {
-  char buf[BYTES_A_LEER];
-  if ((self.recv_(sizeof(buf), buf)) == -1) {
-    std::cerr << "Died sending info with errno: " << hstrerror(errno)
-              << std::endl;
-  }
-  std::cout << buf << std::endl;
-}
-
 int main(int argc, char* argv[]) {
   if (argc != 3) {
     std::cerr << "Error de argumento." << std::endl;
@@ -30,15 +23,24 @@ int main(int argc, char* argv[]) {
 
   ServerSocket self;
   char* port = argv[1];
-  char* htmlfile = argv[2];
-
-  htmlfile++; // Unused variable error. 
+  std::string rootfile(argv[2]);
 
   try {
     self.bind_(port);
     self.listen_(20);
+    Infomanager infomanager;
     self.accept_();
-    recvInfo(self);
+
+    Parser parse(rootfile);
+    std::string msg;
+    infomanager.recvInfo(self, msg);
+    parse(msg);
+    parse.seeStuff();
+
+    // std::cout << "Server termino de recibir\n";
+    infomanager.sendInfoFromStdin(self);
+    // std::cout << "Server termino de enviar\n";
+
   } catch (std::invalid_argument& e) {
     std::cerr << e.what() << std::endl;
   } catch (...) {

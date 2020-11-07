@@ -17,6 +17,16 @@ Socket::~Socket() {
   }
 }
 
+void Socket::stopRecv() {
+  // std::cout << "NO ME LLEGA MAS DATA\n";
+  if (fd != -1) shutdown(fd, SHUT_RD);
+}
+
+void Socket::stopSend() {
+  // std::cout << "NO MANDO MAS DATA\n";
+  if (fd != -1) shutdown(fd, SHUT_WR);
+}
+
 void Socket::setFd(int newFd) {
   if (fd != -1) fd = newFd;
 }
@@ -33,24 +43,23 @@ struct addrinfo* Socket::get_addr_info(const char* port, const char* ip) {
   return address_list;
 }
 
-int Socket::send_(std::string& msg) {
-  if (msg.empty()) return -1;
-  unsigned int len = msg.length();
+int Socket::send_(unsigned int len, const char* msg) {
   unsigned int already_sent = 0;
-  unsigned int remaining = msg.length();
+  unsigned int remaining = len;
   while (already_sent < len) {
     int just_sent = 0;
     if ((just_sent = send(fd, &msg[already_sent], remaining, MSG_NOSIGNAL)) ==
         -1) {
       return -1;
     }
+    // std::cout << "Send me acaba de tirar: " << just_sent << "\n";
     already_sent += just_sent;
     remaining -= just_sent;
   }
   return already_sent;
 }
 
-int Socket::recv_(unsigned int len, char buf[]) {
+int Socket::recv_(unsigned int len, char* buf) {
   unsigned int already_read = 0;
   unsigned int remaining = len;
   while (already_read < len) {
@@ -58,8 +67,10 @@ int Socket::recv_(unsigned int len, char buf[]) {
     if ((just_read = recv(fd, &buf[already_read], remaining, 0)) == -1) {
       return -1;
     } else if (just_read == 0) {
+      // std::cout << "Recv me acaba de tirar: " << just_read << "\n";
       break;
     }
+    // std::cout << "Recv me acaba de tirar: " << just_read << "\n";
     already_read += just_read;
     remaining -= just_read;
   }
