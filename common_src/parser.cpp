@@ -24,7 +24,7 @@ void Parser::operator()(std::string& alllines) {
 
 Parser::Parser(std::string& filename) { fillroot(filename); }
 
-void Parser::fillroot(std::string& filename) {
+void Parser::fillroot(const std::string& filename) {
   std::ifstream file;
   std::string line;
   file.open(filename);

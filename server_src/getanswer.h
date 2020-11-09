@@ -9,7 +9,7 @@
 
 class GetAnswer : public Response {
  public:
-  std::string generate(Parser& parser, Referencefountain& msg);
+  std::string generate(Parser& parser, Referencefountain& msg) override;
 };
 
 #endif  // GETANSWER_H_

@@ -9,7 +9,7 @@
 
 class PostAnswer : public Response {
  public:
-  std::string generate(Parser& parser, Referencefountain& msg);
+  std::string generate(Parser& parser, Referencefountain& msg) override;
 };
 
 #endif  // POSTANSWER_H_

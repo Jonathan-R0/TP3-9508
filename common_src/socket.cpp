@@ -35,9 +35,9 @@ void Socket::stopSend() {
   if (fd != -1) shutdown(fd, SHUT_WR);
 }
 
-void Socket::setFd(int newFd) {
+/*void Socket::setFd(int newFd) {
   if (fd != -1) fd = newFd;
-}
+}*/
 
 void Socket::killfd() { close(fd); }
 

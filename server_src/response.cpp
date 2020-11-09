@@ -14,9 +14,9 @@
 Response::~Response() {}
 
 Response* Response::create(Parser& parser) {
-  if (parser.isMethod(GET_METHOD)) {
+  if (parser.method == GET_METHOD) {
     return new GetAnswer();
-  } else if (parser.isMethod(POST_METHOD)) {
+  } else if (parser.method == POST_METHOD) {
     return new PostAnswer();
   }
   return new InvalidAnswer();

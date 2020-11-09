@@ -9,7 +9,7 @@
 
 class InvalidAnswer : public Response {
  public:
-  std::string generate(Parser& parser, Referencefountain& msg);
+  std::string generate(Parser& parser, Referencefountain& msg) override;
 };
 
 #endif  // INVALIDANSWER_H_

@@ -15,7 +15,7 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
-Aceptador::Aceptador(char* p, std::string r) : port(p), rootfile(r) {
+Aceptador::Aceptador(char* p, const std::string r) : port(p), rootfile(r) {
   server.bind_(port);
   server.listen_(20);
 }
