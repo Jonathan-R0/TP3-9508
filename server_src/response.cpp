@@ -9,14 +9,14 @@
 #include "postanswer.h"
 
 #define GET_METHOD "GET"
-#define POST_METHOD "PÓST"
+#define POST_METHOD "POST"
 
 Response::~Response() {}
 
 Response* Response::create(Parser& parser) {
   if (parser.isMethod(GET_METHOD)) {
     return new GetAnswer();
-  } else if (parser.isMethod(GET_METHOD)) {
+  } else if (parser.isMethod(POST_METHOD)) {
     return new PostAnswer();
   }
   return new InvalidAnswer();

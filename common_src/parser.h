@@ -20,11 +20,11 @@ class Parser {
 
   // TEST ONLY
   void seeStuff() {
-    std::cout << "Method: " << method << std::endl << std::endl;
-    std::cout << "Resource: " << resource << std::endl << std::endl;
-    std::cout << "Protocol: " << protocol << std::endl << std::endl;
-    std::cout << "Body: " << body << std::endl << std::endl;
-    std::cout << "Root: " << root << std::endl << std::endl;
+    std::cout << "Method: |" << method << "|\n" << std::endl;
+    std::cout << "Resource: |" << resource << "|\n" << std::endl;
+    std::cout << "Protocol: |" << protocol << "|\n" << std::endl;
+    std::cout << "Body: |" << body << "|\n" << std::endl;
+    std::cout << "Root: |" << root << "|\n" << std::endl;
   }
 };
 

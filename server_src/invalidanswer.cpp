@@ -4,5 +4,6 @@
 #include "referencefountain.h"
 
 std::string InvalidAnswer::generate(Parser& parser, Referencefountain& msg) {
-  return "HTTP/1.1 405 METHOD NOT ALLOWED\n\n";
+  return "HTTP/1.1 405 METHOD NOT ALLOWED\n\n" + parser.method +
+         " es un comando desconocido";
 }

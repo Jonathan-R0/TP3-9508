@@ -15,9 +15,7 @@ void Clienthandler::run() {
   Parser parse(rootfile);
   parse(msg);
 
-  std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n ";
-  parse.seeStuff();
-  std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n ";
+  // parse.seeStuff();
 
   Response* responsegenerator = Response::create(parse);
   std::string answer =

@@ -8,10 +8,10 @@
 #include "parser.h"
 #include "socket.h"
 
-#define BYTES_A_LEER 5000
+#define BYTES_A_LEER 256
 
 void Infomanager::recvInfo(Socket& self, std::string& msg) {
-  char buf[BYTES_A_LEER];
+  char buf[BYTES_A_LEER] = {};
   int read;
   while ((read = self.recv_(sizeof(buf), buf)) != 0) {
     if (read == -1) {

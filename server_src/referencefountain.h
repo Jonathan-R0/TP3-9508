@@ -1,6 +1,7 @@
 #ifndef REFERENCEFOUNTAIN_H_
 #define REFERENCEFOUNTAIN_H_
 
+#include <iostream>
 #include <map>
 #include <mutex>
 
@@ -12,10 +13,13 @@ class Referencefountain {
  public:
   std::string getReferenceFrom(std::string& key) {
     std::unique_lock<std::mutex> lock(m);
+    // std::cout << "Looking up: " << key << std::endl;
     return references[key];
   }
   void setReferenceTo(std::string key, std::string value) {
     std::unique_lock<std::mutex> lock(m);
+    // std::cout << "Saving key: " << key << " and value: " << value <<
+    // std::endl;
     references[key] = value;
   }
 };

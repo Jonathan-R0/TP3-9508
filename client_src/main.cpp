@@ -20,23 +20,17 @@ int main(int argc, char* argv[]) {
   }
 
   Socket self;
-  //  ClientSocket recver;
-
   char* port = argv[2];
   char* ip = argv[1];
   Infomanager infomanager;
 
   try {
     self.connect_(port, ip);
-    //  recver.connect_(port, ip);
 
     infomanager.sendInfoFromStdin(self);
-    // std::cout << "Client termino de enviar\n";
     std::string msg;
     infomanager.recvInfo(self, msg);
     std::cout << msg << std::endl;
-    // std::cout << "Client termino de recibir\n";
-
   } catch (std::invalid_argument& e) {
     std::cerr << e.what() << std::endl;
   } catch (...) {

@@ -11,7 +11,7 @@
 #include "clienthandler.h"
 #include "referencefountain.h"
 
-// typedef std::list<Clienthandler*>::iterator iterator_t;
+typedef std::list<Clienthandler*>::iterator iterator_t;
 
 class Aceptador : public Thread {
  private:

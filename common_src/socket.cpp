@@ -15,14 +15,10 @@
 #define GET_ADDR_INFO_ERROR "Error on client's getaddrinfo."
 
 Socket::~Socket() {
-  std::cout << "--------------------------------------------------------\n";
-
-  std::cout << "Estoy destruyendo el socket con fd: " << fd << std::endl;
   if (fd != -1) {
     shutdown(fd, SHUT_RDWR);
     close(fd);
   }
-  std::cout << "--------------------------------------------------------\n";
 }
 
 Socket& Socket::operator=(Socket&& other) {
@@ -32,12 +28,10 @@ Socket& Socket::operator=(Socket&& other) {
 }
 
 void Socket::stopRecv() {
-  // std::cout << "NO ME LLEGA MAS DATA\n";
   if (fd != -1) shutdown(fd, SHUT_RD);
 }
 
 void Socket::stopSend() {
-  // std::cout << "NO MANDO MAS DATA\n";
   if (fd != -1) shutdown(fd, SHUT_WR);
 }
 
@@ -82,10 +76,8 @@ void Socket::connect_(const char* port, const char* ip) {
 }
 
 int Socket::accept_() {
-  std::cout << "Mi fd actual es: " << fd << std::endl;
   int extra_fd = accept(fd, nullptr, nullptr);
   if (extra_fd == -1) throw std::invalid_argument(ACCEPT_ERROR);
-  std::cout << "Mi nuevo fd es: " << extra_fd << std::endl;
   return extra_fd;
 }
 
@@ -95,8 +87,7 @@ int Socket::bind_(const char* port) {
   if ((address_list = this->get_addr_info(port, nullptr)) == nullptr) return -1;
 
   int val = 1;
-  for (struct addrinfo* conex = address_list;
-       conex != nullptr;  // ESTO PUEDE HACER COPIAS PELIGROSAS
+  for (struct addrinfo* conex = address_list; conex != nullptr;
        conex = conex->ai_next) {
     int extra_fd =
         socket(conex->ai_family, conex->ai_socktype, conex->ai_protocol);
@@ -128,7 +119,6 @@ int Socket::send_(unsigned int len, const char* msg) {
         -1) {
       return -1;
     }
-    // std::cout << "Send me acaba de tirar: " << just_sent << "\n";
     already_sent += just_sent;
     remaining -= just_sent;
   }
@@ -148,13 +138,10 @@ int Socket::recv_(unsigned int len, char* buf) {
     if ((just_read = recv(fd, &buf[already_read], remaining, 0)) == -1) {
       return -1;
     } else if (just_read == 0) {
-      // std::cout << "Recv me acaba de tirar: " << just_read << "\n";
       break;
     }
-    // std::cout << "Recv me acaba de tirar: " << just_read << "\n";
     already_read += just_read;
     remaining -= just_read;
   }
-  buf[len] = 0;
   return already_read;
 }

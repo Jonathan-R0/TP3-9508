@@ -22,15 +22,12 @@ int main(int argc, char* argv[]) {
   }
   std::string file = argv[2];
   Aceptador* worker = new Aceptador(argv[1], file);
-
   try {
     worker->start();
     std::string quit;
     while (true) {
-      std::cout << "ENTRO AL CICLO MAIN\n";
       std::cin >> quit;
       if (quit == "q") {
-        std::cout << "EXIT CODE\n";
         delete worker;
         break;
       }
@@ -40,7 +37,5 @@ int main(int argc, char* argv[]) {
   } catch (...) {
     std::cerr << GENERIC_ERROR << std::endl;
   }
-  std::cout << "MATANDO AL MAIN\n";
-
   return 0;
 }
