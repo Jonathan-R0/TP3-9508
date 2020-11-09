@@ -12,6 +12,7 @@ void Parser::operator()(std::string& alllines) {
   lines >> resource;
   lines >> protocol;
   resource.erase(0, 1);
+  std::cout << method << " /" << resource << " " << protocol << std::endl;
   bool isBody = false;
   getline(lines, line);  // La primera siempre me queda vacía.
 
@@ -22,9 +23,7 @@ void Parser::operator()(std::string& alllines) {
   }
 }
 
-Parser::Parser(std::string& filename) : rootfile(filename) {
-  fillroot(filename);
-}
+Parser::Parser(std::string& filename) : root(filename) { fillroot(filename); }
 
 void Parser::fillroot(std::string& filename) {
   std::ifstream file;

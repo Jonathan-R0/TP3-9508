@@ -10,11 +10,25 @@
 #include <iostream>
 #include <string>
 
+#define ACCEPT_ERROR "Error on server's accept, the socket was not open."
+
+#define GET_ADDR_INFO_ERROR "Error on client's getaddrinfo."
+
 Socket::~Socket() {
+  std::cout << "--------------------------------------------------------\n";
+
+  std::cout << "Estoy destruyendo el socket con fd: " << fd << std::endl;
   if (fd != -1) {
     shutdown(fd, SHUT_RDWR);
     close(fd);
   }
+  std::cout << "--------------------------------------------------------\n";
+}
+
+Socket& Socket::operator=(Socket&& other) {
+  this->fd = other.fd;
+  other.fd = -1;
+  return *this;
 }
 
 void Socket::stopRecv() {
@@ -31,6 +45,8 @@ void Socket::setFd(int newFd) {
   if (fd != -1) fd = newFd;
 }
 
+void Socket::killfd() { close(fd); }
+
 struct addrinfo* Socket::get_addr_info(const char* port, const char* ip) {
   struct addrinfo* address_list;
   struct addrinfo hints;
@@ -41,6 +57,66 @@ struct addrinfo* Socket::get_addr_info(const char* port, const char* ip) {
 
   if (getaddrinfo(ip, port, &hints, &address_list) != 0) return nullptr;
   return address_list;
+}
+
+void Socket::connect_(const char* port, const char* ip) {
+  struct addrinfo* address_list = nullptr;
+  if ((address_list = this->get_addr_info(port, ip)) == nullptr)
+    throw std::invalid_argument(GET_ADDR_INFO_ERROR);
+
+  for (struct addrinfo* conex = address_list; conex != nullptr;
+       conex = conex->ai_next) {
+    int extra_fd =
+        socket(conex->ai_family, conex->ai_socktype, conex->ai_protocol);
+    if (extra_fd == -1) {
+      continue;
+    } else if (connect(extra_fd, conex->ai_addr, conex->ai_addrlen) == -1) {
+      close(extra_fd);
+      continue;
+    } else {
+      fd = extra_fd;
+      break;  // I'm in...
+    }
+  }
+  freeaddrinfo(address_list);
+}
+
+int Socket::accept_() {
+  std::cout << "Mi fd actual es: " << fd << std::endl;
+  int extra_fd = accept(fd, nullptr, nullptr);
+  if (extra_fd == -1) throw std::invalid_argument(ACCEPT_ERROR);
+  std::cout << "Mi nuevo fd es: " << extra_fd << std::endl;
+  return extra_fd;
+}
+
+int Socket::bind_(const char* port) {
+  struct addrinfo* address_list;
+
+  if ((address_list = this->get_addr_info(port, nullptr)) == nullptr) return -1;
+
+  int val = 1;
+  for (struct addrinfo* conex = address_list;
+       conex != nullptr;  // ESTO PUEDE HACER COPIAS PELIGROSAS
+       conex = conex->ai_next) {
+    int extra_fd =
+        socket(conex->ai_family, conex->ai_socktype, conex->ai_protocol);
+    setsockopt(extra_fd, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val));
+    if (extra_fd == -1) {
+      continue;
+    } else if (bind(extra_fd, conex->ai_addr, conex->ai_addrlen) == -1) {
+      close(extra_fd);
+      continue;
+    } else {
+      fd = extra_fd;
+      break;  // I'm in...
+    }
+  }
+  freeaddrinfo(address_list);
+  return (fd == -1);
+}
+
+int Socket::listen_(unsigned int queueSize) {
+  return (listen(fd, queueSize) == -1);
 }
 
 int Socket::send_(unsigned int len, const char* msg) {
@@ -57,6 +133,11 @@ int Socket::send_(unsigned int len, const char* msg) {
     remaining -= just_sent;
   }
   return already_sent;
+}
+
+Socket::Socket(Socket&& other) {
+  this->fd = other.fd;
+  other.fd = -1;
 }
 
 int Socket::recv_(unsigned int len, char* buf) {

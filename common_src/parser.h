@@ -6,17 +6,17 @@
 
 class Parser {
  private:
+  void fillroot(std::string& rootfile);
+
+ public:
   std::string method;
   std::string resource;
   std::string protocol;
   std::string body;
   std::string root;
-  void fillroot(std::string& rootfile);
-  std::string rootfile;
-
- public:
   Parser(std::string& file);
   void operator()(std::string& alllines);
+  bool isMethod(std::string s) { return (method == s); }
 
   // TEST ONLY
   void seeStuff() {

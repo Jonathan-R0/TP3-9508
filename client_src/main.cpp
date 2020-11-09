@@ -2,7 +2,7 @@
 #include <iostream>
 
 #include "../common_src/infomanager.h"
-#include "clientsocket.h"
+#include "../common_src/socket.h"
 
 #define GENERIC_ERROR "A weird error just occured in the client..."
 
@@ -16,24 +16,24 @@
 int main(int argc, char* argv[]) {
   if (argc != 3) {
     std::cerr << "Error de argumento." << std::endl;
-    return 1;
+    return 0;
   }
 
-  ClientSocket sender;
+  Socket self;
   //  ClientSocket recver;
 
-  char* port = argv[1];
-  char* ip = argv[2];
+  char* port = argv[2];
+  char* ip = argv[1];
   Infomanager infomanager;
 
   try {
-    sender.connect_(port, ip);
+    self.connect_(port, ip);
     //  recver.connect_(port, ip);
 
-    infomanager.sendInfoFromStdin(sender);
+    infomanager.sendInfoFromStdin(self);
     // std::cout << "Client termino de enviar\n";
     std::string msg;
-    infomanager.recvInfo(sender, msg);
+    infomanager.recvInfo(self, msg);
     std::cout << msg << std::endl;
     // std::cout << "Client termino de recibir\n";
 
