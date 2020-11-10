@@ -22,7 +22,7 @@ void Parser::operator()(std::string& alllines) {
   }
 }
 
-Parser::Parser(std::string& filename) { fillroot(filename); }
+Parser::Parser(const std::string& filename) { fillroot(filename); }
 
 void Parser::fillroot(const std::string& filename) {
   std::ifstream file;

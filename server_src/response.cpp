@@ -13,7 +13,7 @@
 
 Response::~Response() {}
 
-Response* Response::create(Parser& parser) {
+Response* Response::create(const Parser& parser) {
   if (parser.method == GET_METHOD) {
     return new GetAnswer();
   } else if (parser.method == POST_METHOD) {

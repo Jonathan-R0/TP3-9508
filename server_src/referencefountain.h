@@ -17,7 +17,7 @@ class Referencefountain {
     // std::cout << "Looking up: " << key << std::endl;
     return references[key];
   }
-  void setReferenceTo(std::string key, const std::string value) {
+  void setReferenceTo(const std::string& key, const std::string& value) {
     std::unique_lock<std::mutex> lock(m);
     // std::cout << "Saving key: " << key << " and value: " << value <<
     // std::endl;

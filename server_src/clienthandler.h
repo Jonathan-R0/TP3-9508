@@ -9,7 +9,7 @@
 
 class Clienthandler : public Thread {
  private:
-  const std::string rootfile;
+  const std::string& rootfile;
   bool isDeadB;
   int fd;
   Referencefountain& refs;

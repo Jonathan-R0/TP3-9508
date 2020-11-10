@@ -14,7 +14,7 @@ class Parser {
   std::string protocol;
   std::string body;
   std::string root;
-  explicit Parser(std::string& file);
+  explicit Parser(const std::string& file);
   void operator()(std::string& alllines);
 
   // TEST ONLY
