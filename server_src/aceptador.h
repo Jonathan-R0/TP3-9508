@@ -22,7 +22,7 @@ class Aceptador : public Thread {
   Socket server;
 
  public:
-  Aceptador(char* p, const std::string r);
+  Aceptador(char* p, const std::string& r);
   ~Aceptador();
   void removeDeadClients();
   void run() override;

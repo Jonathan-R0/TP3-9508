@@ -15,7 +15,7 @@ class Clienthandler : public Thread {
   Referencefountain& refs;
 
  public:
-  Clienthandler(const std::string file, int fdgiven, Referencefountain& r)
+  Clienthandler(const std::string& file, int fdgiven, Referencefountain& r)
       : rootfile(file), isDeadB(false), fd(fdgiven), refs(r) {}
   void run() override;
   bool isDead() { return isDeadB; }
