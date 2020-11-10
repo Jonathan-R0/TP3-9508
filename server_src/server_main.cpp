@@ -2,16 +2,9 @@
 #include <iostream>
 
 #include "../common_src/infomanager.h"
-#include "../common_src/parser.h"
 #include "../common_src/socket.h"
 #include "aceptador.h"
-
-// DELETE THIS LATER
-#include <arpa/inet.h>
-#include <netdb.h>
-#include <stddef.h>
-#include <sys/socket.h>
-#include <unistd.h>
+#include "parser.h"
 
 #define GENERIC_ERROR "A weird error just occured in the server..."
 

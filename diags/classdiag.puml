@@ -1,0 +1,13 @@
+@startuml Diagrama de Clases, TP3.
+
+class socket{
+	+socket_send()
+	+socket_recv()
+	+socket_accept()
+	+socket_bind()
+	+socket_listen()
+	+socket_connect()
+	#get_addr_info()
+}
+
+@enduml

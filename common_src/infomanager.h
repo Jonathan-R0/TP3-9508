@@ -8,8 +8,8 @@
 class Infomanager {
  public:
   void recvInfo(Socket& self, std::string& rootfile);
-  int sendInfo(Socket& self, std::string& msg);
-  int sendInfoFromStdin(Socket& self);
+  void sendInfo(Socket& self, std::string& msg);
+  void sendInfoFromStdin(Socket& self);
 };
 
 #endif  // INFOMANAGER_H_

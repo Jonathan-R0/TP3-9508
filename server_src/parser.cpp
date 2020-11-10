@@ -18,7 +18,6 @@ void Parser::operator()(std::string& alllines) {
   while (getline(lines, line)) {
     if (line.empty()) isBody = true;
     if (isBody && !line.empty()) body += "\n" + line;
-    // std::cout << "En root appendeo: |" << line << "|\n";
   }
 }
 
@@ -29,7 +28,6 @@ void Parser::fillroot(const std::string& filename) {
   std::string line;
   file.open(filename);
   while (getline(file, line)) {
-	root += "\n" + line;
-    //  std::cout << "En root appendeo: |" << line << "|\n";
+    root += "\n" + line;
   }
 }

@@ -16,15 +16,6 @@ class Parser {
   std::string root;
   explicit Parser(const std::string& file);
   void operator()(std::string& alllines);
-
-  // TEST ONLY
-  /*void seeStuff() {
-    std::cout << "Method: |" << method << "|\n" << std::endl;
-    std::cout << "Resource: |" << resource << "|\n" << std::endl;
-    std::cout << "Protocol: |" << protocol << "|\n" << std::endl;
-    std::cout << "Body: |" << body << "|\n" << std::endl;
-    std::cout << "Root: |" << root << "|\n" << std::endl;
-  }*/
 };
 
 #endif  // PARSER_H_

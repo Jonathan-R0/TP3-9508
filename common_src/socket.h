@@ -16,7 +16,6 @@ class Socket {
   void stopSend();
   int send_(unsigned int len, const char* msg);
   int recv_(unsigned int len, char* buf);
-  // void setFd(int newFd);
   int bind_(const char* port);
   int listen_(unsigned int queueSize);
   void connect_(const char* port, const char* ip);

@@ -2,10 +2,10 @@
 
 #include <iostream>
 
-#include "../common_src/parser.h"
 #include "aceptador.h"
 #include "getanswer.h"
 #include "invalidanswer.h"
+#include "parser.h"
 #include "postanswer.h"
 
 #define GET_METHOD "GET"

@@ -14,13 +14,10 @@ class Referencefountain {
  public:
   std::string getReferenceFrom(const std::string& key) {
     std::unique_lock<std::mutex> lock(m);
-    // std::cout << "Looking up: " << key << std::endl;
     return references[key];
   }
   void setReferenceTo(const std::string& key, const std::string& value) {
     std::unique_lock<std::mutex> lock(m);
-    // std::cout << "Saving key: " << key << " and value: " << value <<
-    // std::endl;
     references[key] = value;
   }
 };

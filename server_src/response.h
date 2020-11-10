@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "../common_src/parser.h"
+#include "parser.h"
 #include "referencefountain.h"
 
 class Response {

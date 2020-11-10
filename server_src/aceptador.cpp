@@ -3,21 +3,13 @@
 #include <fstream>
 #include <iostream>
 
-#include "../common_src/infomanager.h"
-#include "../common_src/parser.h"
 #include "clienthandler.h"
-#include "response.h"
 
-// DELETE THIS LATER
-#include <arpa/inet.h>
-#include <netdb.h>
-#include <stddef.h>
-#include <sys/socket.h>
-#include <unistd.h>
+#define QUEUESIZE 20
 
-Aceptador::Aceptador(char* p, const std::string& r) : port(p), rootfile(r) {
+Aceptador::Aceptador(char* port, const std::string& r) : rootfile(r) {
   server.bind_(port);
-  server.listen_(20);
+  server.listen_(QUEUESIZE);
 }
 
 Aceptador::~Aceptador() {

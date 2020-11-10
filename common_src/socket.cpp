@@ -1,9 +1,6 @@
 #include "socket.h"
 
-#include <arpa/inet.h>
 #include <netdb.h>
-#include <stddef.h>
-#include <sys/socket.h>
 #include <unistd.h>
 
 #include <cstring>
@@ -11,7 +8,6 @@
 #include <string>
 
 #define ACCEPT_ERROR "Error on server's accept, the socket was not open."
-
 #define GET_ADDR_INFO_ERROR "Error on client's getaddrinfo."
 
 Socket::~Socket() {
@@ -22,9 +18,16 @@ Socket::~Socket() {
 }
 
 Socket& Socket::operator=(Socket&& other) {
+  if (this != &other) {
+    this->fd = other.fd;
+    other.fd = -1;
+  }
+  return *this;
+}
+
+Socket::Socket(Socket&& other) {
   this->fd = other.fd;
   other.fd = -1;
-  return *this;
 }
 
 void Socket::stopRecv() {
@@ -34,10 +37,6 @@ void Socket::stopRecv() {
 void Socket::stopSend() {
   if (fd != -1) shutdown(fd, SHUT_WR);
 }
-
-/*void Socket::setFd(int newFd) {
-  if (fd != -1) fd = newFd;
-}*/
 
 void Socket::killfd() { close(fd); }
 
@@ -69,7 +68,7 @@ void Socket::connect_(const char* port, const char* ip) {
       continue;
     } else {
       fd = extra_fd;
-      break;  // I'm in...
+      break;
     }
   }
   freeaddrinfo(address_list);
@@ -99,7 +98,7 @@ int Socket::bind_(const char* port) {
       continue;
     } else {
       fd = extra_fd;
-      break;  // I'm in...
+      break;
     }
   }
   freeaddrinfo(address_list);
@@ -123,11 +122,6 @@ int Socket::send_(unsigned int len, const char* msg) {
     remaining -= just_sent;
   }
   return already_sent;
-}
-
-Socket::Socket(Socket&& other) {
-  this->fd = other.fd;
-  other.fd = -1;
 }
 
 int Socket::recv_(unsigned int len, char* buf) {

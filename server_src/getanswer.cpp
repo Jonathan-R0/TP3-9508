@@ -1,16 +1,20 @@
 #include "getanswer.h"
 
-#include "../common_src/parser.h"
+#include "parser.h"
 #include "referencefountain.h"
+
+#define OK_HTMLCODE "HTTP/1.1 200 OK\n\n"
+#define GET_ERROR "HTTP 404 NOT FOUND\n\n"
+#define OK_ROOTFILE "HTTP/1.1 200 OK\nContent-Type: text/html\n"
 
 std::string GetAnswer::generate(Parser& parser, Referencefountain& msg) {
   if (!parser.resource.empty()) {
     std::string htmlcode = msg.getReferenceFrom(parser.resource);
     if (htmlcode != "") {
-      return "HTTP/1.1 200 OK\n\n" + htmlcode;
+      return OK_HTMLCODE + htmlcode;
     } else {
-      return "HTTP 404 NOT FOUND\n\n";
+      return GET_ERROR;
     }
   }
-  return "HTTP/1.1 200 OK\nContent-Type: text/html\n" + parser.root;
+  return OK_ROOTFILE + parser.root;
 }

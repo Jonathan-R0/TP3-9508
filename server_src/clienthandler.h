@@ -4,19 +4,18 @@
 #include <string>
 
 #include "../common_src/socket.h"
-#include "../common_src/thread.h"
 #include "referencefountain.h"
+#include "thread.h"
 
 class Clienthandler : public Thread {
  private:
   const std::string& rootfile;
   bool isDeadB;
-  int fd;
+  Socket self;
   Referencefountain& refs;
 
  public:
-  Clienthandler(const std::string& file, int fdgiven, Referencefountain& r)
-      : rootfile(file), isDeadB(false), fd(fdgiven), refs(r) {}
+  Clienthandler(const std::string& file, int fdgiven, Referencefountain& r);
   void run() override;
   bool isDead() { return isDeadB; }
 };
