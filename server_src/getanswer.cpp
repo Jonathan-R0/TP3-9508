@@ -12,5 +12,5 @@ std::string GetAnswer::generate(Parser& parser, Referencefountain& msg) {
       return "HTTP 404 NOT FOUND\n\n";
     }
   }
-  return "HTTP 200 OK\nContent-Type: text/html\n\n" + parser.root;
+  return "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" + parser.root;
 }
