@@ -29,7 +29,7 @@ void Parser::fillroot(const std::string& filename) {
   std::string line;
   file.open(filename);
   while (getline(file, line)) {
-    root += line + "\n";
+	root += "\n" + line;
     //  std::cout << "En root appendeo: |" << line << "|\n";
   }
 }
