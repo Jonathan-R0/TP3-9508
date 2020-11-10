@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
     std::cerr << "Error de argumento." << std::endl;
     return 1;
   }
-  std::string file = argv[2];
+  const std::string file = argv[2];
   Aceptador* worker = new Aceptador(argv[1], file);
   try {
     worker->start();

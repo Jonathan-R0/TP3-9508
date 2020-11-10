@@ -17,7 +17,7 @@ void Parser::operator()(std::string& alllines) {
   getline(lines, line);  // La primera siempre me queda vacía.
   while (getline(lines, line)) {
     if (line.empty()) isBody = true;
-    if (isBody) body += line + "\n";
+    if (isBody && !line.empty()) body += "\n" + line;
     // std::cout << "En root appendeo: |" << line << "|\n";
   }
 }
