@@ -36,7 +36,9 @@ Siendo:
 
 <br><p align="center"><img src="img/classdiag.png"/></p> 
 
-<br><p align="center"><img src="img/seqdiag.png"/></p> 
+<br><p align="center"><img src="img/seqdiagclient.png"/></p> 
+
+<br><p align="center"><img src="img/seqdiagserver.png"/></p> 
 
 ## Herramientas Utilizadas
 

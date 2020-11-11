@@ -18,3 +18,4 @@ void Clientmanager::start() {
   infomanager.recvInfo(self, msg);
   std::cout << msg << std::endl;
 }
+
