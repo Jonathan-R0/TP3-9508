@@ -34,9 +34,23 @@ Siendo:
 
 ## Diseño y Clases
 
+Este sistema está compuesto por varias clases. Primero está _Response_, el cual puede generar el tipo de respuesta correspondiente en función de la información parseada y devolver una referencia al mismo. Está clase posee un método abstracto cuyas hijas implementarán como necesiten para generar la respuesta correspondiente en función de la situación. 
+
+Luego está la clase _ReferenceFountain_ que es, basicamente, un diccionario thread-safe. Útil para ser manipulado por varios hilos de forma concurrente sin generar condiciones de carrera.
+
+La clase que interactua con esta, es el _ClientHandler_. El mismo posee el socket antes aceptado por el socket del server y puede comunicar cuando terminó de ejecutarse (útil para remover las instancias que ya no estén operando).
+
+La clase _Infomanager_ funciona como un wrapper del socket y facilita el pasaje de información por el mismo. Es utilizado por el cliente y servidor.
+
+Finalmente la última clase importante es _Aceptador_. Esta contiene la lógica principal del programa desde el lado del servidor. Mientras vive procesa clientes entrantes, elimina los ya procesados y al ser eliminado (es decir, cuando el main recibe una 'q' por stdin) libera todos los recursos que este necesitó, una vez termina de ejecutar lo que ya tenía designado. El uso de un hilo aquí permite que el server pueda delegarle la responsabilidad de manipular la información, mientras este solo espera que llegue el input que mate al programa.
+
 <br><p align="center"><img src="img/classdiag.png"/></p> 
 
+Desde el lado del cliente, vemos como lo único que hace es crear su socket y usar el _infomanager_ para enviar y recibir datos. Finalmente se liberan todos los recursos.
+
 <br><p align="center"><img src="img/seqdiagclient.png"/></p> 
+
+En cambio vemos que el servidor se ejecutan muchas más operaciones. Consecuencia obvia de la amplia cantidad de clases que tenemos en ```/server_src```. Este posee su propio socket principal que hace el el bind para reservar un puerto, un listen para escuchar conexiones entrantes y un accept para admitirlas. Luego la instancia de Clienthandler le pide a la instancia de Infomanager que reciba la información con el socket nuevo, la parsea, genera una respuesta de forma polimórfica y la envía. Todo esto ocurre en hilos que trabajan de forma concurrente, mientras que el Aceptador va destruyendo los hilos que ya no están operando. Finalmente se liberan todos los recursos.
 
 <br><p align="center"><img src="img/seqdiagserver.png"/></p> 
 
