@@ -1,6 +1,8 @@
 #include "clientmanager.h"
 
 #include <iostream>
+#include <string>
+#include <utility>
 
 #include "../common_src/infomanager.h"
 #include "../common_src/socket.h"

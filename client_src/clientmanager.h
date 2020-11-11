@@ -1,5 +1,5 @@
-#ifndef CLIENTMANAGER_H
-#define CLIENTMANAGER_H
+#ifndef CLIENTMANAGER_H_
+#define CLIENTMANAGER_H_
 
 #include "../common_src/socket.h"
 
@@ -12,4 +12,5 @@ class Clientmanager {
   void start();
 };
 
-#endif  // CLIENTMANAGER_H
+#endif  // CLIENTMANAGER_H_
+
