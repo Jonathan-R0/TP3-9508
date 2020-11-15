@@ -12,14 +12,8 @@ class Referencefountain {
   std::mutex m;
 
  public:
-  std::string getReferenceFrom(const std::string& key) {
-    std::unique_lock<std::mutex> lock(m);
-    return references[key];
-  }
-  void setReferenceTo(const std::string& key, const std::string& value) {
-    std::unique_lock<std::mutex> lock(m);
-    references[key] = value;
-  }
+  std::string getReferenceFrom(const std::string& key);
+  void setReferenceTo(const std::string& key, const std::string& value);
 };
 
 #endif  // REFERENCEFOUNTAIN_H_
