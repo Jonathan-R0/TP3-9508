@@ -8,8 +8,8 @@
 #define QUEUESIZE 20
 
 Aceptador::Aceptador(char* port, const std::string& r) : rootfile(r) {
-  server.bind_(port);
-  server.listen_(QUEUESIZE);
+  server.bind(port);
+  server.listen(QUEUESIZE);
 }
 
 Aceptador::~Aceptador() {
@@ -26,7 +26,7 @@ Aceptador::~Aceptador() {
 void Aceptador::run() {
   while (true) {
     try {
-      int newfd = server.accept_();
+      int newfd = server.accept();
       Clienthandler* handler = new Clienthandler(rootfile, newfd, references);
       clientlist.push_back(handler);
       handler->start();

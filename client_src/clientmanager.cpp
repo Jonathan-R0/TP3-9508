@@ -9,7 +9,7 @@
 
 Clientmanager::Clientmanager(char* ip, char* port) {
   Socket toBeMoved;
-  toBeMoved.connect_(port, ip);
+  toBeMoved.connect(port, ip);
   self = std::move(toBeMoved);
 }
 
@@ -20,4 +20,3 @@ void Clientmanager::start() {
   infomanager.recvInfo(self, msg);
   std::cout << msg << std::endl;
 }
-

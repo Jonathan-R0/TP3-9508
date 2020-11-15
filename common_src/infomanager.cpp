@@ -14,7 +14,7 @@
 void Infomanager::recvInfo(Socket& self, std::string& msg) {
   char buf[BYTES_A_LEER] = {};
   int read;
-  while ((read = self.recv_(sizeof(buf), buf)) != 0) {
+  while ((read = self.recv(sizeof(buf), buf)) != 0) {
     if (read == -1) {
       std::cerr << RECVERROR << hstrerror(errno) << std::endl;
     }
@@ -24,7 +24,7 @@ void Infomanager::recvInfo(Socket& self, std::string& msg) {
 }
 
 void Infomanager::sendInfo(Socket& self, std::string& msg) {
-  if (self.send_(msg.length(), msg.c_str()) == -1)
+  if (self.send(msg.length(), msg.c_str()) == -1)
     std::cerr << SENDERROR << hstrerror(errno) << std::endl;
   self.stopSend();
 }

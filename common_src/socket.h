@@ -14,12 +14,12 @@ class Socket {
   ~Socket();
   void stopRecv();
   void stopSend();
-  int send_(unsigned int len, const char* msg);
-  int recv_(unsigned int len, char* buf);
-  int bind_(const char* port);
-  int listen_(unsigned int queueSize);
-  void connect_(const char* port, const char* ip);
-  int accept_();
+  int send(unsigned int len, const char* msg);
+  int recv(unsigned int len, char* buf);
+  int bind(const char* port);
+  int listen(unsigned int queueSize);
+  void connect(const char* port, const char* ip);
+  int accept();
   Socket(Socket&& other);
   Socket& operator=(Socket&& other);
   void killfd();

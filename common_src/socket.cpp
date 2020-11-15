@@ -52,7 +52,7 @@ struct addrinfo* Socket::get_addr_info(const char* port, const char* ip) {
   return address_list;
 }
 
-void Socket::connect_(const char* port, const char* ip) {
+void Socket::connect(const char* port, const char* ip) {
   struct addrinfo* address_list = nullptr;
   if ((address_list = this->get_addr_info(port, ip)) == nullptr)
     throw std::invalid_argument(GET_ADDR_INFO_ERROR);
@@ -63,7 +63,7 @@ void Socket::connect_(const char* port, const char* ip) {
         socket(conex->ai_family, conex->ai_socktype, conex->ai_protocol);
     if (extra_fd == -1) {
       continue;
-    } else if (connect(extra_fd, conex->ai_addr, conex->ai_addrlen) == -1) {
+    } else if (::connect(extra_fd, conex->ai_addr, conex->ai_addrlen) == -1) {
       close(extra_fd);
       continue;
     } else {
@@ -74,13 +74,13 @@ void Socket::connect_(const char* port, const char* ip) {
   freeaddrinfo(address_list);
 }
 
-int Socket::accept_() {
-  int extra_fd = accept(fd, nullptr, nullptr);
+int Socket::accept() {
+  int extra_fd = ::accept(fd, nullptr, nullptr);
   if (extra_fd == -1) throw std::invalid_argument(ACCEPT_ERROR);
   return extra_fd;
 }
 
-int Socket::bind_(const char* port) {
+int Socket::bind(const char* port) {
   struct addrinfo* address_list;
 
   if ((address_list = this->get_addr_info(port, nullptr)) == nullptr) return -1;
@@ -93,7 +93,7 @@ int Socket::bind_(const char* port) {
     setsockopt(extra_fd, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val));
     if (extra_fd == -1) {
       continue;
-    } else if (bind(extra_fd, conex->ai_addr, conex->ai_addrlen) == -1) {
+    } else if (::bind(extra_fd, conex->ai_addr, conex->ai_addrlen) == -1) {
       close(extra_fd);
       continue;
     } else {
@@ -105,16 +105,16 @@ int Socket::bind_(const char* port) {
   return (fd == -1);
 }
 
-int Socket::listen_(unsigned int queueSize) {
-  return (listen(fd, queueSize) == -1);
+int Socket::listen(unsigned int queueSize) {
+  return (::listen(fd, queueSize) == -1);
 }
 
-int Socket::send_(unsigned int len, const char* msg) {
+int Socket::send(unsigned int len, const char* msg) {
   unsigned int already_sent = 0;
   unsigned int remaining = len;
   while (already_sent < len) {
     int just_sent = 0;
-    if ((just_sent = send(fd, &msg[already_sent], remaining, MSG_NOSIGNAL)) ==
+    if ((just_sent = ::send(fd, &msg[already_sent], remaining, MSG_NOSIGNAL)) ==
         -1) {
       return -1;
     }
@@ -124,12 +124,12 @@ int Socket::send_(unsigned int len, const char* msg) {
   return already_sent;
 }
 
-int Socket::recv_(unsigned int len, char* buf) {
+int Socket::recv(unsigned int len, char* buf) {
   unsigned int already_read = 0;
   unsigned int remaining = len;
   while (already_read < len) {
     int just_read = 0;
-    if ((just_read = recv(fd, &buf[already_read], remaining, 0)) == -1) {
+    if ((just_read = ::recv(fd, &buf[already_read], remaining, 0)) == -1) {
       return -1;
     } else if (just_read == 0) {
       break;
