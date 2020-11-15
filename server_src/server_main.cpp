@@ -3,7 +3,7 @@
 
 #include "../common_src/infomanager.h"
 #include "../common_src/socket.h"
-#include "aceptador.h"
+#include "accepter.h"
 #include "parser.h"
 
 #define GENERIC_ERROR "A weird error just occured in the server..."
@@ -14,7 +14,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
   const std::string file = argv[2];
-  Aceptador* worker = new Aceptador(argv[1], file);
+  Accepter* worker = new Accepter(argv[1], file);
   try {
     worker->start();
     std::string quit;

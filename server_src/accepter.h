@@ -1,5 +1,5 @@
-#ifndef ACEPTADOR_H_
-#define ACEPTADOR_H_
+#ifndef ACCEPTER_H_
+#define ACCEPTER_H_
 
 #include <list>
 #include <string>
@@ -11,7 +11,7 @@
 
 typedef std::list<Clienthandler*>::iterator iterator_t;
 
-class Aceptador : public Thread {
+class Accepter : public Thread {
  private:
   Referencefountain references;
   std::list<Clienthandler*> clientlist;
@@ -19,10 +19,10 @@ class Aceptador : public Thread {
   Socket server;
 
  public:
-  Aceptador(char* p, const std::string& r);
-  ~Aceptador();
+  Accepter(char* p, const std::string& r);
+  ~Accepter();
   void removeDeadClients();
   void run() override;
 };
 
-#endif  // ACEPTADOR_H_
+#endif  // ACCEPTER_H_

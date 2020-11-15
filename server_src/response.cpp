@@ -2,7 +2,6 @@
 
 #include <iostream>
 
-#include "aceptador.h"
 #include "getanswer.h"
 #include "invalidanswer.h"
 #include "parser.h"

@@ -1,4 +1,4 @@
-#include "aceptador.h"
+#include "accepter.h"
 
 #include <fstream>
 #include <iostream>
@@ -8,12 +8,12 @@
 
 #define QUEUESIZE 20
 
-Aceptador::Aceptador(char* port, const std::string& r) : rootfile(r) {
+Accepter::Accepter(char* port, const std::string& r) : rootfile(r) {
   server.bind(port);
   server.listen(QUEUESIZE);
 }
 
-Aceptador::~Aceptador() {
+Accepter::~Accepter() {
   for (Clienthandler* hilocliente : clientlist) {
     hilocliente->join();
     delete hilocliente;
@@ -24,7 +24,7 @@ Aceptador::~Aceptador() {
   this->join();
 }
 
-void Aceptador::run() {
+void Accepter::run() {
   while (true) {
     try {
       int newfd = server.accept();
@@ -38,7 +38,7 @@ void Aceptador::run() {
   }
 }
 
-void Aceptador::removeDeadClients() {
+void Accepter::removeDeadClients() {
   for (iterator_t i = clientlist.begin(); i != clientlist.end();) {
     if ((*i)->isDead()) {
       (*i)->join();
