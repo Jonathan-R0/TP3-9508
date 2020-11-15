@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 
+#include "../common_src/socketclosedexception.h"
 #include "clienthandler.h"
 
 #define QUEUESIZE 20
@@ -31,7 +32,7 @@ void Aceptador::run() {
       clientlist.push_back(handler);
       handler->start();
       this->removeDeadClients();
-    } catch (std::invalid_argument& e) {
+    } catch (SocketClosedException& e) {
       break;
     }
   }

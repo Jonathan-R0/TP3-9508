@@ -4,8 +4,11 @@
 #include <unistd.h>
 
 #include <cstring>
+#include <exception>
 #include <iostream>
 #include <string>
+
+#include "socketclosedexception.h"
 
 #define ACCEPT_ERROR "Error on server's accept, the socket was not open."
 #define GET_ADDR_INFO_ERROR "Error on client's getaddrinfo."
@@ -76,7 +79,7 @@ void Socket::connect(const char* port, const char* ip) {
 
 int Socket::accept() {
   int extra_fd = ::accept(fd, nullptr, nullptr);
-  if (extra_fd == -1) throw std::invalid_argument(ACCEPT_ERROR);
+  if (extra_fd == -1) throw SocketClosedException(ACCEPT_ERROR);
   return extra_fd;
 }
 
