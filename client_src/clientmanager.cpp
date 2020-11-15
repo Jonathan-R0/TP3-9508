@@ -7,11 +7,7 @@
 #include "../common_src/infomanager.h"
 #include "../common_src/socket.h"
 
-Clientmanager::Clientmanager(char* ip, char* port) {
-  Socket toBeMoved;
-  toBeMoved.connect(port, ip);
-  self = std::move(toBeMoved);
-}
+Clientmanager::Clientmanager(char* ip, char* port) { self.connect(port, ip); }
 
 void Clientmanager::start() {
   Infomanager infomanager;
