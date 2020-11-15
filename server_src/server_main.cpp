@@ -14,14 +14,13 @@ int main(int argc, char* argv[]) {
     return 1;
   }
   const std::string file = argv[2];
-  Accepter* worker = new Accepter(argv[1], file);
+  Accepter worker(argv[1], file);
   try {
-    worker->start();
+    worker.start();
     std::string quit;
     while (true) {
       std::cin >> quit;
       if (quit == "q") {
-        delete worker;
         break;
       }
     }
