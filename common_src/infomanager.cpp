@@ -3,23 +3,25 @@
 #include <netdb.h>
 
 #include <iostream>
+#include <cstring>
 #include <string>
 
 #include "socket.h"
 
-#define BYTES_A_LEER 256
+#define BYTES_A_LEER 32
 #define RECVERROR "Died receiving info with errno: "
 #define SENDERROR "Died sending info with errno: "
 
 void Infomanager::recvInfo(Socket& self, std::string& msg) {
   char buf[BYTES_A_LEER] = {};
   int read;
-  while ((read = self.recv(sizeof(buf), buf)) != 0) {
+  while ((read = self.recv(sizeof(buf)-1, buf)) != 0) {
     if (read == -1) {
       std::cerr << RECVERROR << hstrerror(errno) << std::endl;
     }
+    msg += buf;
+	memset(buf,0,sizeof(buf));;
   }
-  msg += buf;
   self.shutdown(SHUT_RD);
 }
 
