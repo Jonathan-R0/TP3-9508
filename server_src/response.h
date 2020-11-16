@@ -8,7 +8,7 @@
 
 class Response {
  public:
-  static Response* create(const Parser& parser);
+  static Response* create(Parser& parser);
   virtual ~Response() = 0;
   virtual std::string generate(Parser& parser, Referencefountain& msg) = 0;
 };

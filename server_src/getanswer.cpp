@@ -8,13 +8,13 @@
 #define OK_ROOTFILE "HTTP/1.1 200 OK\nContent-Type: text/html\n"
 
 std::string GetAnswer::generate(Parser& parser, Referencefountain& msg) {
-  if (!parser.resource.empty()) {
-    std::string htmlcode = msg.getReferenceFrom(parser.resource);
+  if (!parser.getResource().empty()) {
+    std::string htmlcode = msg.getReferenceFrom(parser.getResource());
     if (htmlcode != "") {
       return OK_HTMLCODE + htmlcode;
     } else {
       return GET_ERROR;
     }
   }
-  return OK_ROOTFILE + parser.root;
+  return OK_ROOTFILE + parser.getRoot();
 }

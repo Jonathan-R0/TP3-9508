@@ -7,13 +7,18 @@
 class Parser {
  private:
   void fillroot(const std::string& rootfile);
-
- public:
   std::string method;
   std::string resource;
   std::string protocol;
   std::string body;
   std::string root;
+
+ public:
+  std::string getMethod();
+  std::string getBody();
+  std::string getResource();
+  std::string getRoot();
+
   explicit Parser(const std::string& file);
   void operator()(std::string& alllines);
 };

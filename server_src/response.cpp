@@ -12,10 +12,10 @@
 
 Response::~Response() {}
 
-Response* Response::create(const Parser& parser) {
-  if (parser.method == GET_METHOD) {
+Response* Response::create(Parser& parser) {
+  if (parser.getMethod() == GET_METHOD) {
     return new GetAnswer();
-  } else if (parser.method == POST_METHOD) {
+  } else if (parser.getMethod() == POST_METHOD) {
     return new PostAnswer();
   }
   return new InvalidAnswer();

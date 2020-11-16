@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
         break;
       }
     }
-  } catch (std::invalid_argument& e) {
+  } catch (std::exception& e) {
     std::cerr << e.what() << std::endl;
   } catch (...) {
     std::cerr << GENERIC_ERROR << std::endl;
