@@ -27,8 +27,9 @@ Accepter::~Accepter() {
 void Accepter::run() {
   while (true) {
     try {
-      int newfd = server.accept();
-      Clienthandler* handler = new Clienthandler(rootfile, newfd, references);
+      Socket newsocket = server.accept();
+      Clienthandler* handler =
+          new Clienthandler(rootfile, std::move(newsocket), references);
       clientlist.push_back(handler);
       handler->start();
       this->removeDeadClients();

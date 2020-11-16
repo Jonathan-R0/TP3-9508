@@ -7,10 +7,10 @@ class Socket {
  private:
   int fd;
   struct addrinfo* get_addr_info(const char* port, const char* ip);
+  explicit Socket(int fdGiven) : fd(fdGiven) {}
 
  public:
   Socket() : fd(-1) {}
-  explicit Socket(int fdGiven) : fd(fdGiven) {}
   ~Socket();
   void stopRecv();
   void stopSend();
@@ -19,7 +19,7 @@ class Socket {
   int bind(const char* port);
   int listen(unsigned int queueSize);
   void connect(const char* port, const char* ip);
-  int accept();
+  Socket accept();
   Socket(Socket&& other);
   Socket& operator=(Socket&& other);
   void killfd();

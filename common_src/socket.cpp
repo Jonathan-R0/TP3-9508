@@ -77,10 +77,10 @@ void Socket::connect(const char* port, const char* ip) {
   freeaddrinfo(address_list);
 }
 
-int Socket::accept() {
+Socket Socket::accept() {
   int extra_fd = ::accept(fd, nullptr, nullptr);
   if (extra_fd == -1) throw SocketClosedException(ACCEPT_ERROR);
-  return extra_fd;
+  return (Socket(extra_fd));
 }
 
 int Socket::bind(const char* port) {
