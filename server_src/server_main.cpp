@@ -21,6 +21,7 @@ int main(int argc, char* argv[]) {
     while (true) {
       std::cin >> quit;
       if (quit == "q") {
+        worker.stop();
         break;
       }
     }

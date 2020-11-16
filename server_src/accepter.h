@@ -19,6 +19,7 @@ class Accepter : public Thread {
   Socket server;
 
  public:
+  void stop();
   Accepter(char* p, const std::string& r);
   ~Accepter();
   void removeDeadClients();

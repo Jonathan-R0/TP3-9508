@@ -1,5 +1,7 @@
 #include "accepter.h"
 
+#include <netdb.h>
+
 #include <fstream>
 #include <iostream>
 
@@ -7,6 +9,8 @@
 #include "clienthandler.h"
 
 #define QUEUESIZE 20
+
+void Accepter::stop() { server.shutdown(SHUT_RDWR); }
 
 Accepter::Accepter(char* port, const std::string& r) : rootfile(r) {
   server.bind(port);
@@ -18,9 +22,6 @@ Accepter::~Accepter() {
     hilocliente->join();
     delete hilocliente;
   }
-  server.stopRecv();
-  server.stopSend();
-  server.killfd();
   this->join();
 }
 

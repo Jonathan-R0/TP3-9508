@@ -20,13 +20,13 @@ void Infomanager::recvInfo(Socket& self, std::string& msg) {
     }
   }
   msg += buf;
-  self.stopRecv();
+  self.shutdown(SHUT_RD);
 }
 
 void Infomanager::sendInfo(Socket& self, std::string& msg) {
   if (self.send(msg.length(), msg.c_str()) == -1)
     std::cerr << SENDERROR << hstrerror(errno) << std::endl;
-  self.stopSend();
+  self.shutdown(SHUT_WR);
 }
 
 void Infomanager::sendInfoFromStdin(Socket& self) {

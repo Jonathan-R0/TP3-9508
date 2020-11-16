@@ -12,8 +12,7 @@ class Socket {
  public:
   Socket() : fd(-1) {}
   ~Socket();
-  void stopRecv();
-  void stopSend();
+  void shutdown(int channel);
   int send(unsigned int len, const char* msg);
   int recv(unsigned int len, char* buf);
   int bind(const char* port);
@@ -22,7 +21,6 @@ class Socket {
   Socket accept();
   Socket(Socket&& other);
   Socket& operator=(Socket&& other);
-  void killfd();
 };
 
 #endif  // SOCKET_H_

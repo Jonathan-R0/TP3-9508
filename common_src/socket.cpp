@@ -15,7 +15,7 @@
 
 Socket::~Socket() {
   if (fd != -1) {
-    shutdown(fd, SHUT_RDWR);
+    ::shutdown(fd, SHUT_RDWR);
     close(fd);
   }
 }
@@ -33,15 +33,9 @@ Socket::Socket(Socket&& other) {
   other.fd = -1;
 }
 
-void Socket::stopRecv() {
-  if (fd != -1) shutdown(fd, SHUT_RD);
+void Socket::shutdown(int channel) {
+  if (fd != -1) ::shutdown(fd, channel);
 }
-
-void Socket::stopSend() {
-  if (fd != -1) shutdown(fd, SHUT_WR);
-}
-
-void Socket::killfd() { close(fd); }
 
 struct addrinfo* Socket::get_addr_info(const char* port, const char* ip) {
   struct addrinfo* address_list;
