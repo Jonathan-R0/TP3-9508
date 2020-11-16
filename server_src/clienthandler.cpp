@@ -16,13 +16,17 @@ Clienthandler::Clienthandler(const std::string& file, Socket s,
 void Clienthandler::run() {
   Infomanager infomanager;
   std::string msg;
-  infomanager.recvInfo(self, msg);
-  Parser parse(rootfile);
-  parse(msg);
-  Response* responsegenerator = Response::create(parse);
-  std::string answer =
-      responsegenerator->generate(parse, refs);  // POLYMORPHISM!
-  infomanager.sendInfo(self, answer);
-  delete responsegenerator;
+  try {
+    infomanager.recvInfo(self, msg);
+    Parser parse(rootfile);
+    parse(msg);
+    Response* responsegenerator = Response::create(parse);
+    std::string answer =
+        responsegenerator->generate(parse, refs);  // POLYMORPHISM!
+    infomanager.sendInfo(self, answer);
+    delete responsegenerator;
+  } catch (std::exception& e) {
+    std::cerr << e.what() << std::endl;
+  }
   isDeadB = true;
 }
