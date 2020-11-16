@@ -7,11 +7,10 @@
 #include "parser.h"
 #include "response.h"
 
-Clienthandler::Clienthandler(const std::string& file, int fdgiven,
+Clienthandler::Clienthandler(const std::string& file, Socket s,
                              Referencefountain& r)
     : rootfile(file), isDeadB(false), refs(r) {
-  Socket toBeMoved(fdgiven);
-  self = std::move(toBeMoved);
+  self = std::move(s);
 }
 
 void Clienthandler::run() {
