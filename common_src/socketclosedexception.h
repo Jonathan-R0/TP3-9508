@@ -9,7 +9,7 @@ class SocketClosedException : public std::exception {
   std::string errormsg;
 
  public:
-  SocketClosedException(std::string e) : errormsg(e) {}
+  explicit SocketClosedException(const std::string& e) : errormsg(e) {}
   virtual const char* what() const throw();
 };
 

@@ -4,6 +4,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <utility>
 
 #include "../common_src/socketclosedexception.h"
 #include "clienthandler.h"

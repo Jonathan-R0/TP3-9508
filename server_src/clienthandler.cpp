@@ -9,9 +9,7 @@
 
 Clienthandler::Clienthandler(const std::string& file, Socket s,
                              Referencefountain& r)
-    : rootfile(file), isDeadB(false), refs(r) {
-  self = std::move(s);
-}
+    : rootfile(file), isDeadB(false), self(std::move(s)), refs(r) {}
 
 void Clienthandler::run() {
   Infomanager infomanager;
