@@ -13,4 +13,3 @@ class Clientmanager {
 };
 
 #endif  // CLIENTMANAGER_H_
-
