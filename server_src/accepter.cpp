@@ -10,6 +10,7 @@
 #include "clienthandler.h"
 
 #define QUEUESIZE 20
+#define GENERIC_ACCEPTER_ERROR "Error desconocido en el hilo aceptador."
 
 void Accepter::stop() { server.shutdown(SHUT_RDWR); }
 
@@ -27,17 +28,21 @@ Accepter::~Accepter() {
 }
 
 void Accepter::run() {
-  while (true) {
-    try {
+  try {
+    while (true) {
       Socket newsocket = server.accept();
       Clienthandler* handler =
           new Clienthandler(rootfile, std::move(newsocket), references);
       clientlist.push_back(handler);
       handler->start();
       this->removeDeadClients();
-    } catch (SocketClosedException& e) {
-      break;
     }
+  } catch (SocketClosedException& e) {
+    return;
+  } catch (std::exception& e) {
+    std::cerr << e.what() << std::endl;
+  } catch (...) {
+    std::cerr << GENERIC_ACCEPTER_ERROR << std::endl;
   }
 }
 

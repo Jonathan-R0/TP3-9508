@@ -21,7 +21,6 @@ void Infomanager::recvInfo(Socket& self, std::string& msg) {
     }
     msg += buf;
     memset(buf, 0, sizeof(buf));
-    ;
   }
   self.shutdown(SHUT_RD);
 }

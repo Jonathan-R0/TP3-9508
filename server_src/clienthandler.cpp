@@ -7,6 +7,8 @@
 #include "parser.h"
 #include "response.h"
 
+#define GENERIC_CLIENTHANDLER_ERROR "Error desconocido ocurrió en el aceptador de clientes."
+
 Clienthandler::Clienthandler(const std::string& file, Socket s,
                              Referencefountain& r)
     : rootfile(file), isDeadB(false), self(std::move(s)), refs(r) {}
@@ -25,6 +27,8 @@ void Clienthandler::run() {
     delete responsegenerator;
   } catch (std::exception& e) {
     std::cerr << e.what() << std::endl;
+  } catch (...) {
+    std::cerr << GENERIC_CLIENTHANDLER_ERROR << std::endl;
   }
   isDeadB = true;
 }

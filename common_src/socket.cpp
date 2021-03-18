@@ -21,7 +21,7 @@ Socket::~Socket() {
 }
 
 Socket& Socket::operator=(Socket&& other) {
-  if (this != &other) {
+  if (this != &other && this->fd == -1) {
     this->fd = other.fd;
     other.fd = -1;
   }
